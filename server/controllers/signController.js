@@ -23,6 +23,7 @@ export const validateToken = async (req, res) =>{
         res.status(200).json({
             documentId: signer.documentId._id,
             documentName: signer.documentId.originalFileName,
+            fileUrl: signer.documentId.currentFileUrl,
             hasSigned: signer.hasSigned
         });
     } catch(error) {

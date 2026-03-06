@@ -9,6 +9,7 @@ const useEditorPage = () => {
     const [tempScale, setTempScale] = useState(1.4);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSigned, setIsSigned] = useState(false);
+    const [fileUrl, setFileUrl] = useState(null);
     const [signedFileUrl, setSignedFileUrl] = useState(null);
     
     const store = useSignatureStore();
@@ -16,6 +17,19 @@ const useEditorPage = () => {
     const { signatures, deleteSignature, selectedId, setSelectedId } = store;
     
     const { token } = useParams();
+
+    useEffect(() => {
+        const fetchDocument = async () => {
+            try {
+                const data = await signService.validateToken(token);
+                const apiBaseUrl = import.meta.env.VITE_API_URL?.replace("/api", "") || "http://localhost:5000";
+                setFileUrl(`${apiBaseUrl}/${data.fileUrl}`);
+            } catch (error) {
+                console.error("Failed to fetch document:", error);
+            }
+        };
+        fetchDocument();
+    }, [token]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -90,7 +104,9 @@ const useEditorPage = () => {
         selectedId,
         setSelectedId,
         
-        handleFinalize
+        handleFinalize,
+        fileUrl,
+        signedFileUrl
     };
 };
 

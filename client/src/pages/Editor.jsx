@@ -99,6 +99,7 @@ const Editor = () => {
                                     selectedId={selectedId}
                                     setSelectedId={setSelectedId}
                                     scale={scale}
+                                    fileUrl={fileUrl}
                                 />
                             </div>
                         </div>

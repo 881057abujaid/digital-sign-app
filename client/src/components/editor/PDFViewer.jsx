@@ -5,18 +5,19 @@ import PDFPage from "./PDFPage";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = PDFWorker;
 
-const PDFViewer = ({ signatures, containerRef, onResize, onDelete, selectedId, setSelectedId, scale }) =>{
+const PDFViewer = ({ signatures, containerRef, onResize, onDelete, selectedId, setSelectedId, scale, fileUrl }) =>{
     const [pdf, setPdf] = useState(null);
     const [pages, setPages] = useState([]);
 
     useEffect(() =>{
+        if (!fileUrl) return;
         const loadPDF = async () =>{
-            const loadingTask = pdfjsLib.getDocument("/sample.pdf");
+            const loadingTask = pdfjsLib.getDocument(fileUrl);
             const loadedPdf = await loadingTask.promise;
             setPdf(loadedPdf);
         };
         loadPDF();
-    }, []);
+    }, [fileUrl]);
 
     useEffect(() =>{
         if(!pdf) return;
