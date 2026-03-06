@@ -58,7 +58,15 @@ export const submitSignature = async (req, res) =>{
     const document = signer.documentId;
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const pdfPath = path.join(__dirname, "..", document.currentFileUrl);
+    
+    // Robust path resolution: if currentFileUrl is absolute, use it; otherwise join with project root
+    let pdfPath;
+    if (path.isAbsolute(document.currentFileUrl)) {
+      pdfPath = document.currentFileUrl;
+    } else {
+      pdfPath = path.join(__dirname, "..", document.currentFileUrl);
+    }
+
     const existingPdfBytes = fs.readFileSync(pdfPath);
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const pages = pdfDoc.getPages();
@@ -116,6 +124,7 @@ export const submitSignature = async (req, res) =>{
 
     await fs.promises.writeFile(newPath, pdfBytes);
 
+    // Store only relative path in database
     document.currentFileUrl = `uploads/${newFileName}`;
     await document.save();
 

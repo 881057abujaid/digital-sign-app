@@ -2,6 +2,7 @@ import Document from "../models/Document.js";
 import crypto from "crypto";
 import Signer from "../models/Signer.js";
 import Activity from "../models/Activity.js";
+import path from "path";
 
 // Get All Documents for Logged-in User
 export const getUserDocuments = async (req, res) =>{
@@ -74,13 +75,21 @@ export const uploadDocument = async (req, res) =>{
             return res.status(400).json({ message: "No file uploaded" });
         }
 
-        const filePath = req.file.path.replace(/\\/g, "/");
+        // Ensure relative path is stored if it's absolute (useful for Render/Docker environments)
+        let relativePath = req.file.path.replace(/\\/g, "/");
+        if (path.isAbsolute(relativePath)) {
+            // If absolute, extract the 'uploads/...' part
+            const uploadsIdx = relativePath.indexOf("uploads/");
+            if (uploadsIdx !== -1) {
+                relativePath = relativePath.substring(uploadsIdx);
+            }
+        }
         
         const document = await Document.create({
             ownerId: req.user._id,
             originalFileName: req.file.originalname,
-            originalFileUrl: filePath,
-            currentFileUrl: filePath,
+            originalFileUrl: relativePath,
+            currentFileUrl: relativePath,
             status: "pending"
         });
 
