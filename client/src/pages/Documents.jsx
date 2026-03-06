@@ -2,7 +2,7 @@ import UploadChoiceModal from "../components/modals/UploadChoiceModal";
 import useDocumentsPage from "../hooks/useDocumentsPage";
 import Button from "../components/ui/Button";
 import MainLayout from "../layouts/MainLayout";
-import UploadModal from "../components/modals/uploadModal";
+import UploadModal from "../components/modals/UploadModal";
 import ConfirmDeleteModal from "../components/modals/ConfirmDeleteModal";
 import { Search, Filter, FileText, Clock, MoreVertical, Eye, Trash2 } from "lucide-react";
 
