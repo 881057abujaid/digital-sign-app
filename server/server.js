@@ -19,7 +19,10 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173", "https://digital-sign-app-eight.vercel.app"],
+    credentials: true,
+}));
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
