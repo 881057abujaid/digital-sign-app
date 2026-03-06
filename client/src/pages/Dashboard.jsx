@@ -1,6 +1,6 @@
 import MainLayout from "../layouts/MainLayout";
 import DocumentCard from "../components/DocumentCard";
-import UploadModal from "../components/modals/uploadModal";
+import UploadModal from "../components/modals/UploadModal";
 import UploadChoiceModal from "../components/modals/UploadChoiceModal";
 import ConfirmDeclineModal from "../components/modals/ConfirmDeclineModal";
 import useDashboard from "../hooks/useDashboard";
