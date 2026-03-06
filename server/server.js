@@ -9,8 +9,8 @@ import authRoutes from "./routes/authRoutes.js";
 import documentRoutes from "./routes/documentRoutes.js";
 import signRoutes from "./routes/signRoutes.js";
 import path from "path";
-import { fileURLToPath } from "url";
 import fs from "fs";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
