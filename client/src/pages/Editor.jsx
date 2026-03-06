@@ -13,6 +13,7 @@ const Editor = () => {
         isSubmitting,
         isSigned,
         signedFileUrl,
+        fileUrl,
         pdfContainerRef,
         sensors,
         handleDragStart,
